@@ -34,7 +34,7 @@ export const EventsListing = () => {
                   <div
                     className="text-red-600 w-5 h-0 cursor-pointer"
                     onClick={() => {
-                      removeEntity(`organizer/${organizer.id}/event/${event.id}`);
+                      removeEntity(`organiser/${organizer.id}/event/${event.id}`);
                       setChanged(prev => prev + 1);
                     }}
                   >
