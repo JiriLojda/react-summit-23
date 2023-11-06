@@ -3,7 +3,6 @@ import { Button } from "@/components/Button";
 import { Dropdown, TextInput } from "@/components/Inputs";
 import { loadEntities, loadEntity } from "@/data/storage";
 import { Event } from "@/models/event";
-import { Organizer } from "@/models/organizer";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { v4 as createUuid } from "uuid";
@@ -11,16 +10,13 @@ import { v4 as createUuid } from "uuid";
 type Props = Readonly<{
   onSave: (event: Event, organizerId: string) => void;
   onClose?: () => void;
-  variant: string;
-  organizerId?: string;
-  sourceEventId?: string;
-}>;
+}> & PerVariantProps;
 
 export const EventCreator = (props: Props) => {
-  const sourceEvent = props.variant === "fromEvent" ? loadEntity(`organizer/${props.organizerId}/event/${props.sourceEventId}`) as Event : null;
+  const sourceEvent = props.variant === "fromEvent" ? loadEntity(`organizer/${props.organizerId}/event/${props.sourceEventId}`) : null;
   const [event, setEvent] = useState(withSpecificProps(sourceEvent ?? emptyEvent));
   const [organizerId, setOrganizerId] = useState(props.variant === "standard" ? null : props.organizerId);
-  const organizers = loadEntities("organizer") as ReadonlyArray<Organizer>;
+  const organizers = loadEntities("organizer");
 
   return (
     <form
@@ -56,6 +52,16 @@ export const EventCreator = (props: Props) => {
       <Button type="submit" disabled={!organizerId || !event.name}>Create</Button>
     </form>
   )
+};
+
+type PerVariantProps = keyof PropsPerVariant extends infer Variant extends keyof PropsPerVariant
+  ? Variant extends any ? Readonly<{ variant: Variant; }> & PropsPerVariant[Variant] : never
+  : never;
+
+type PropsPerVariant = {
+  standard: Readonly<{}>,
+  forOrganizer: Readonly<{ organizerId: string }>;
+  fromEvent: Readonly<{ organizerId: string; sourceEventId: string }>;
 };
 
 const emptyEvent: Event = {
