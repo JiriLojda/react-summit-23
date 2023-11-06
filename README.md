@@ -1,3 +1,6 @@
+This is a project I used to demonstrate some TypeScript techniques on a workshop for [React Summit US 2023](https://reactsummit.us/#workshops-list).
+You can find the slides in `./presentation.pdf`. Recording of the workshop will also be later available on GitNation's portal.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
