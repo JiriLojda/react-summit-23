@@ -2,7 +2,7 @@
 import { loadEntity } from "@/data/storage";
 
 export default function Page(props: Readonly<{ params: Readonly<{ eventId: string; organizerId: string }>; }>) {
-  const event = loadEntity(`organizer/${props.params.organizerId}/event/${props.params.eventId}`);
+  const event = loadEntity(`organiser/${props.params.organizerId}/event/${props.params.eventId}`);
   if (!event) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
