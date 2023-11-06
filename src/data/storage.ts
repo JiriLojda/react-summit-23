@@ -43,7 +43,7 @@ export const loadEntities = (key: string): ReadonlyArray<any> => {
   return parsedData;
 };
 
-export const removeEntity = (key: string): undefined => {
+export const removeEntity = (key: string): void => {
   const allKey = entityKeyToAllEntitiesKey(key);
   const rawData = localStorage.getItem(allKey);
   const parsedData = JSON.parse(rawData || "[]");
@@ -51,12 +51,10 @@ export const removeEntity = (key: string): undefined => {
 
   if (!tg.isArray(guard)(parsedData)) {
     localStorage.setItem(allKey, "[]");
-    return undefined;
+    return;
   }
 
   localStorage.setItem(allKey, JSON.stringify(parsedData.filter(e => e.id !== getEntityId(key))));
-
-  return undefined;
 }
 
 const findGuardForKey = (key: string): tg.TypeGuard<any> => {
