@@ -49,13 +49,13 @@ export const EventsListing = () => {
       {sidebarProps && (
         <div className="w-64 shrink-0 pt-10">
           <EventCreator
-            {...typeof sidebarProps.eventId === "string" ? { variant: "fromEvent", sourceEventId: sidebarProps.eventId, organizerId: sidebarProps.organizerId } : { variant: "forOrganizer", organizerId: sidebarProps.organizerId }}
             onSave={(e, orgId) => {
               saveEntity(`organizer/${orgId}/event/${e.id}`, e);
               setChanged(prev => prev + 1);
               setSidebarProps(null);
             }}
             onClose={() => setSidebarProps(null)}
+            variant={typeof sidebarProps.eventId === "string" ? "forEvent" : "forOrganizer"}
           />
         </div>
       )}
